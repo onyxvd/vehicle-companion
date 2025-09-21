@@ -8,14 +8,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun PlacesScreen() {
+fun PlacesScreen(
+    viewModel: PlacesViewModel
+) {
+    val uiState = viewModel.uiState
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = "Places",
-            modifier = Modifier,
-        )
+        when (uiState) {
+            is PlacesUiState.Success -> {
+                Text(
+                    text = uiState.places.toString(),
+                    modifier = Modifier,
+                )
+            }
+
+            else -> {
+                Text(text = "Loading...")
+            }
+        }
+
     }
 }
