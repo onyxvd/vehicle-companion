@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -45,11 +46,14 @@ fun PlacesScreen(
                 )
             }
 
-            else -> {
-                Text(text = "Loading...")
+            is PlacesUiState.Loading -> {
+                PlacesLoadingScreen()
+            }
+
+            is PlacesUiState.Error -> {
+                ErrorScreen(uiState.message, onRetry = { viewModel.discoverPlaces() })
             }
         }
-
     }
 }
 
@@ -138,4 +142,32 @@ fun PlaceCardPreview() {
         ),
         onClick = {}
     )
+}
+
+@Composable
+fun PlacesLoadingScreen() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(text = stringResource(R.string.loading))
+    }
+}
+
+@Composable
+fun ErrorScreen(message: String, modifier: Modifier = Modifier, onRetry: () -> Unit) {
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                text = stringResource(R.string.discover_places_error, message),
+                modifier = Modifier.padding(16.dp)
+            )
+            Button(onClick = onRetry) {
+                Text(text = stringResource(R.string.retry))
+            }
+        }
+    }
 }
