@@ -7,4 +7,7 @@
     <string name="loading">Loading…</string>
     <string name="discover_places_error">Error: %1$s</string>
     <string name="retry">Retry</string>
+    <string name="garage_screen_title">Garage</string>
+    <string name="places_screen_title">Places</string>
+    <string name="navigate_up">Navigate up</string>
 </resources>
