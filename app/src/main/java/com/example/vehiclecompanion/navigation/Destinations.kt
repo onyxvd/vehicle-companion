@@ -5,11 +5,15 @@ import com.example.vehiclecompanion.data.network.DiscoverPlace
 
 sealed interface Destination {
     val route: String
+
+    val ARG_SCREEN_TITLE: String
+        get() = "screenTitle"
 }
 
 sealed interface TopLevelDestination : Destination {
     val icon: Int
     val name: String
+
 }
 
 data object Garage : TopLevelDestination {
@@ -27,10 +31,20 @@ data object Places : TopLevelDestination {
 data object PlaceDetails : Destination {
     const val ROUTE_BASE = "place_details"
     const val ARG_PLACE_ID = "placeId"
-    const val ARG_PLACE_NAME = "placeName"
-    override val route = "$ROUTE_BASE/{$ARG_PLACE_ID}/{${ARG_PLACE_NAME}}"
+    override val route = "$ROUTE_BASE/{$ARG_PLACE_ID}/{${ARG_SCREEN_TITLE}}"
 
     fun createNavigationRoute(place: DiscoverPlace): String {
         return "$ROUTE_BASE/${place.id}/${place.name}"
+    }
+}
+
+data object VehicleDetails : Destination {
+    const val ROUTE_BASE = "vehicle_details"
+    const val ARG_VEHICLE_ID = "vehicleId"
+
+    override val route = "$ROUTE_BASE/{$ARG_VEHICLE_ID}/{${ARG_SCREEN_TITLE}}"
+
+    fun createNavigationRoute(id: Int?, screenTitle: String): String {
+        return "$ROUTE_BASE/${id ?: "new"}/${screenTitle}"
     }
 }

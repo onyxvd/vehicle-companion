@@ -17,4 +17,16 @@
     <string name="place_detail_minimap_placeholder">Minimap Placeholder</string>
     <string name="place_detail_open_in_browser">Open in browser</string>
     <string name="place_detail_error_message">Error: %s</string>
+    <string name="add_vehicle">Add vehicle</string>
+    <string name="loading_vehicles">Loading vehicles...</string>
+    <string name="no_vehicles">Your garage is empty.</string>
+    <string name="vehicle_image">Vehicle image</string>
+    <string name="vehicle_details_name_label">Name (Optional)</string>
+    <string name="vehicle_details_make_label">Make</string>
+    <string name="vehicle_details_model_label">Model</string>
+    <string name="vehicle_details_year_label">Year (Optional)</string>
+    <string name="vehicle_details_vin_label">VIN (Optional)</string>
+    <string name="vehicle_details_fuel_type_label">Fuel Type (Optional)</string>
+    <string name="save_vehicle">Save Vehicle</string>
+    <string name="update_vehicle">Update Vehicle</string>
 </resources>
