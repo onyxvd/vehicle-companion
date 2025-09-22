@@ -30,7 +30,8 @@ import com.example.vehiclecompanion.data.network.DiscoverPlace
 
 @Composable
 fun PlacesScreen(
-    viewModel: PlacesViewModel
+    viewModel: PlacesViewModel,
+    onPlaceClicked: (DiscoverPlace) -> Unit
 ) {
     val uiState = viewModel.uiState
 
@@ -42,7 +43,7 @@ fun PlacesScreen(
             is PlacesUiState.Success -> {
                 PlacesListScreen(
                     places = uiState.places,
-                    onPlaceClicked = { /* TODO Handle place click */ }
+                    onPlaceClicked = onPlaceClicked
                 )
             }
 
@@ -60,7 +61,7 @@ fun PlacesScreen(
 @Composable
 fun PlacesListScreen(
     places: List<DiscoverPlace>,
-    onPlaceClicked: (Int) -> Unit
+    onPlaceClicked: (DiscoverPlace) -> Unit
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -71,7 +72,7 @@ fun PlacesListScreen(
                 val place = places[index]
                 PlaceCard(
                     place = place,
-                    onClick = { onPlaceClicked(place.id) }
+                    onClick = { onPlaceClicked(place) }
                 )
             }
         }

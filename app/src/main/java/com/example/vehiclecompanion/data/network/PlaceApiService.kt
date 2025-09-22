@@ -1,6 +1,7 @@
 package com.example.vehiclecompanion.data.network
 
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface PlaceApiService {
@@ -10,4 +11,7 @@ interface PlaceApiService {
         @Query("ne_corner") neCorner: String = "-84.494260,39.113254",
         @Query("page_size") pageSize: Int = 50
     ): DiscoverResponse
+
+    @GET("api/v1/pois/{id}")
+    suspend fun getPlaceDetails(@Path("id") id: Int): Place
 }

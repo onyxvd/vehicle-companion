@@ -7,4 +7,14 @@
     <string name="loading">Loading…</string>
     <string name="discover_places_error">Error: %1$s</string>
     <string name="retry">Retry</string>
+    <string name="garage_screen_title">Garage</string>
+    <string name="places_screen_title">Places</string>
+    <string name="navigate_up">Navigate up</string>
+    <string name="place_id_not_provided">Place ID not found in navigation arguments.</string>
+    <string name="error_fetch_place_details">Failed to load place details: %1$s</string>
+    <string name="place_detail_loading_error">Loading place deatils or not found</string>
+    <string name="place_detail_rating">Rating %s</string>
+    <string name="place_detail_minimap_placeholder">Minimap Placeholder</string>
+    <string name="place_detail_open_in_browser">Open in browser</string>
+    <string name="place_detail_error_message">Error: %s</string>
 </resources>
