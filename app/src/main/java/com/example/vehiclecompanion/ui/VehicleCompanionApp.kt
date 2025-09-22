@@ -44,6 +44,9 @@ fun VehicleCompanionApp() {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
         val context = LocalContext.current
+        val isTopLevelDestination = topLevelDestinations.any {
+            it.route == currentDestination?.route
+        }
 
         Scaffold(
             modifier = Modifier.fillMaxSize(),
@@ -54,9 +57,7 @@ fun VehicleCompanionApp() {
                         Text(title)
                     },
                     navigationIcon = {
-                        if (topLevelDestinations.any { it.route == currentDestination?.route }) {
-                            return@TopAppBar
-                        }
+                        if (isTopLevelDestination) return@TopAppBar
                         IconButton(onClick = { navController.navigateUp() }) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -67,6 +68,7 @@ fun VehicleCompanionApp() {
                 )
             },
             bottomBar = {
+                if (!isTopLevelDestination) return@Scaffold
                 NavigationBar {
                     topLevelDestinations.forEach { destination ->
                         val selected = currentDestination?.route == destination.route
