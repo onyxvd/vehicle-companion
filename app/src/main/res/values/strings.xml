@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Vehicle Companion</string>
+    <string name="error_tap_to_retry">Error: %1$s\nTap to retry.</string>
+    <string name="unknown_place">Unknown Place</string>
+    <string name="no_category">No category</string>
+    <string name="rating">Rating: %1$s</string>
+    <string name="loading">Loading…</string>
+    <string name="discover_places_error">Error: %1$s</string>
+    <string name="retry">Retry</string>
 </resources>
