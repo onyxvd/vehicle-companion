@@ -48,5 +48,28 @@ data class DiscoverPlace(
         result = 31 * result + (loc?.contentHashCode() ?: 0)
         return result
     }
-
 }
+
+@Serializable
+data class Place(
+    val id: Int,
+    val name: String?,
+    val url: String?,
+    @SerialName("average_rating")
+    val rating: Double?,
+    @SerialName("primary_category")
+    val category: Category?,
+    val image: Image?,
+)
+
+@Serializable
+data class Category(
+    @SerialName("display_name")
+    val displayName: String
+)
+
+@Serializable
+data class Image(
+    @SerialName("v_320x320_url")
+    val url: String?
+)

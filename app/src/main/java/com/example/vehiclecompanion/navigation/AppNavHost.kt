@@ -47,10 +47,7 @@ fun AppNavHost(
         ) {
             val viewModel: PlaceDetailsViewModel = hiltViewModel()
             PlaceDetailsScreen(
-                viewModel = viewModel,
-                onNavigateUp = {
-                    navController.navigateUp()
-                }
+                viewModel = viewModel
             )
         }
     }
