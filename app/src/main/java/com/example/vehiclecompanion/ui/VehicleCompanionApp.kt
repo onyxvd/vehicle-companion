@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -29,6 +31,7 @@ import com.example.vehiclecompanion.navigation.AppNavHost
 import com.example.vehiclecompanion.navigation.Garage
 import com.example.vehiclecompanion.navigation.PlaceDetails
 import com.example.vehiclecompanion.navigation.Places
+import com.example.vehiclecompanion.navigation.VehicleDetails
 import com.example.vehiclecompanion.ui.theme.VehicleCompanionTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,6 +53,29 @@ fun VehicleCompanionApp() {
 
         Scaffold(
             modifier = Modifier.fillMaxSize(),
+            floatingActionButton = {
+                if (currentDestination?.route == Garage.route) {
+                    FloatingActionButton(
+                        onClick = {
+                            navController.navigate(
+                                VehicleDetails.createNavigationRoute(
+                                    null,
+                                    context.getString(R.string.add_vehicle)
+                                )
+                            )
+                        },
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
+                    ) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_add),
+                            contentDescription = stringResource(R.string.add_vehicle)
+                        )
+                    }
+                } else {
+                    // No FAB for other screens
+                }
+            },
             topBar = {
                 TopAppBar(
                     title = {
