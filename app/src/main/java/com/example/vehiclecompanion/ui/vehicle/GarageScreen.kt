@@ -32,7 +32,8 @@ import com.example.vehiclecompanion.data.db.model.Vehicle
 @Composable
 fun GarageScreen(
     viewModel: GarageViewModel,
-    onAddVehicleClicked: () -> Unit = {}
+    onAddVehicleClicked: () -> Unit = {},
+    onVehicleClicked: (Int) -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -44,7 +45,8 @@ fun GarageScreen(
         is GarageUiState.Success -> {
             GarageListScreen(
                 vehicles = (uiState as GarageUiState.Success).vehicles,
-                onAddVehicleClicked = onAddVehicleClicked
+                onAddVehicleClicked = onAddVehicleClicked,
+                onVehicleClicked = onVehicleClicked
             )
         }
 
@@ -64,7 +66,8 @@ fun LoadingScreen() {
 @Composable
 fun GarageListScreen(
     vehicles: List<Vehicle>,
-    onAddVehicleClicked: () -> Unit = {}
+    onAddVehicleClicked: () -> Unit = {},
+    onVehicleClicked: (Int) -> Unit = {}
 ) {
     if (vehicles.isEmpty()) {
         Box(
@@ -85,17 +88,24 @@ fun GarageListScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(vehicles) { vehicle ->
-                VehicleCard(vehicle = vehicle)
+                VehicleCard(
+                    vehicle = vehicle,
+                    onVehicleClicked = onVehicleClicked
+                )
             }
         }
     }
 }
 
 @Composable
-fun VehicleCard(vehicle: Vehicle) {
+fun VehicleCard(
+    vehicle: Vehicle,
+    onVehicleClicked: (Int) -> Unit = {}
+) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        onClick = { onVehicleClicked(vehicle.id!!) }
     ) {
         Column {
             Box(

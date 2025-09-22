@@ -13,4 +13,7 @@ class VehicleRepository @Inject constructor(
 
     suspend fun insertVehicle(vehicle: Vehicle) =
         vehicleDao.insertVehicle(vehicle)
+
+    suspend fun updateVehicle(vehicle: Vehicle) =
+        vehicleDao.updateVehicle(vehicle)
 }

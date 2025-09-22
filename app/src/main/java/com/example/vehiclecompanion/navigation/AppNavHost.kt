@@ -38,6 +38,14 @@ fun AppNavHost(
                             "Add Vehicle"
                         )
                     )
+                },
+                onVehicleClicked = { vehicleId ->
+                    navController.navigate(
+                        VehicleDetails.createNavigationRoute(
+                            vehicleId,
+                            "Edit Vehicle"
+                        )
+                    )
                 }
             )
         }

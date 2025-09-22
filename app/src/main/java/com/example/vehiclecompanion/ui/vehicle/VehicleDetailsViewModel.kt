@@ -156,7 +156,12 @@ class VehicleDetailsViewModel @Inject constructor(
         )
 
         viewModelScope.launch {
-            vehicleRepository.insertVehicle(vehicleToSave)
+            if (currentVehicleData.isNewVehicle && vehicleToSave.id == null) {
+                vehicleRepository.insertVehicle(vehicleToSave)
+            } else {
+                vehicleRepository.updateVehicle(vehicleToSave)
+            }
+
             _saveEventChannel.emit(Unit)
         }
     }
