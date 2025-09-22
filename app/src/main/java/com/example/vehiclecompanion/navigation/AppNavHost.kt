@@ -85,6 +85,9 @@ fun AppNavHost(
                 viewModel = viewModel,
                 onSaveCompleted = {
                     navController.navigateUp()
+                },
+                onDeleteCompleted = {
+                    navController.navigateUp()
                 }
             )
         }

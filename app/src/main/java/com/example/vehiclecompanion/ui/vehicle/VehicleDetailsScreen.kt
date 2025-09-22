@@ -3,13 +3,17 @@ package com.example.vehiclecompanion.ui.vehicle
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,13 +29,20 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun VehicleDetailsScreen(
     viewModel: VehicleDetailsViewModel = hiltViewModel(),
-    onSaveCompleted: () -> Unit = {}
+    onSaveCompleted: () -> Unit = {},
+    onDeleteCompleted: () -> Unit = {}
 ) {
     val uiState by viewModel.vehicleUiState.collectAsState()
 
     LaunchedEffect(viewModel.saveEventChannel, onSaveCompleted) {
         viewModel.saveEventChannel.collectLatest {
             onSaveCompleted()
+        }
+    }
+
+    LaunchedEffect(viewModel.deleteEventChannel, onDeleteCompleted) {
+        viewModel.deleteEventChannel.collectLatest {
+            onDeleteCompleted()
         }
     }
 
@@ -58,13 +69,15 @@ fun VehicleDetailsScreen(
                 VehicleFormContent(
                     formData = currentUiState.vehicleData,
                     formError = currentUiState.formError,
+                    isNewVehicle = currentUiState.vehicleData.isNewVehicle,
                     onNameChange = { viewModel.updateName(it) },
                     onMakeChange = { viewModel.updateMake(it) },
                     onModelChange = { viewModel.updateModel(it) },
                     onYearChange = { viewModel.updateYear(it) },
                     onVinChange = { viewModel.updateVin(it) },
                     onFuelTypeChange = { viewModel.updateFuelType(it) },
-                    onSaveClicked = { viewModel.saveVehicle() }
+                    onSaveClicked = { viewModel.saveVehicle() },
+                    onDeleteClicked = { viewModel.deleteVehicle() }
                 )
             }
         }
@@ -75,13 +88,15 @@ fun VehicleDetailsScreen(
 fun VehicleFormContent(
     formData: VehicleFormData,
     formError: String?,
+    isNewVehicle: Boolean,
     onNameChange: (String?) -> Unit,
     onMakeChange: (String) -> Unit,
     onModelChange: (String) -> Unit,
     onYearChange: (Int?) -> Unit,
     onVinChange: (String?) -> Unit,
     onFuelTypeChange: (String?) -> Unit,
-    onSaveClicked: () -> Unit
+    onSaveClicked: () -> Unit,
+    onDeleteClicked: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -148,12 +163,27 @@ fun VehicleFormContent(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        Button(
-            onClick = onSaveClicked,
+        Row(
             modifier = Modifier.fillMaxWidth(),
-            enabled = formData.make.isNotBlank() && formData.model.isNotBlank()
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Text("Save Vehicle")
+            if (!isNewVehicle) {
+                OutlinedButton(
+                    onClick = onDeleteClicked,
+                    modifier = Modifier.weight(1f),
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
+                ) {
+                    Text("Delete")
+                }
+            }
+            Button(
+                onClick = onSaveClicked,
+                modifier = Modifier.weight(1f),
+                enabled = formData.make.isNotBlank() && formData.model.isNotBlank()
+            ) {
+                Text(if (isNewVehicle) "Save Vehicle" else "Update Vehicle")
+            }
         }
+        Spacer(modifier = Modifier.height(8.dp))
     }
 }

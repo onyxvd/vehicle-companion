@@ -1,6 +1,7 @@
 package com.example.vehiclecompanion.data.db.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
@@ -20,4 +21,7 @@ interface VehicleDao {
 
     @Query("SELECT * FROM vehicles")
     fun getAllVehicles(): Flow<List<Vehicle>>
+
+    @Delete
+    suspend fun deleteVehicle(vehicle: Vehicle)
 }

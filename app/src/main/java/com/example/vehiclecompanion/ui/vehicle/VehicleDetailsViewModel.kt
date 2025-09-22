@@ -59,6 +59,9 @@ class VehicleDetailsViewModel @Inject constructor(
     private val _saveEventChannel = MutableSharedFlow<Unit>()
     val saveEventChannel: SharedFlow<Unit> = _saveEventChannel.asSharedFlow()
 
+    private val _deleteEventChannel = MutableSharedFlow<Unit>()
+    val deleteEventChannel: SharedFlow<Unit> = _deleteEventChannel.asSharedFlow()
+
     init {
         if (!isNewVehicleEntry && vehicleId != null) {
             loadVehicle(vehicleId.toInt())
@@ -145,15 +148,7 @@ class VehicleDetailsViewModel @Inject constructor(
             return
         }
 
-        val vehicleToSave = Vehicle(
-            id = if (currentVehicleData.isNewVehicle) null else currentVehicleData.id,
-            name = currentVehicleData.name,
-            make = currentVehicleData.make,
-            model = currentVehicleData.model,
-            year = currentVehicleData.year,
-            vin = currentVehicleData.vin,
-            fuelType = currentVehicleData.fuelType
-        )
+        val vehicleToSave = vehicleDataToVehicle(currentVehicleData)
 
         viewModelScope.launch {
             if (currentVehicleData.isNewVehicle && vehicleToSave.id == null) {
@@ -164,5 +159,28 @@ class VehicleDetailsViewModel @Inject constructor(
 
             _saveEventChannel.emit(Unit)
         }
+    }
+
+    fun deleteVehicle() {
+        val currentSuccessState =
+            _vehicleUiState.value as? VehicleDetailsScreenUiState.Success ?: return
+        val vehicleToDelete = vehicleDataToVehicle(currentSuccessState.vehicleData)
+
+        viewModelScope.launch {
+            vehicleRepository.deleteVehicle(vehicleToDelete)
+            _deleteEventChannel.emit(Unit)
+        }
+    }
+
+    private fun vehicleDataToVehicle(vehicleData: VehicleFormData): Vehicle {
+        return Vehicle(
+            id = if (vehicleData.isNewVehicle) null else vehicleData.id,
+            name = vehicleData.name,
+            make = vehicleData.make,
+            model = vehicleData.model,
+            year = vehicleData.year,
+            vin = vehicleData.vin,
+            fuelType = vehicleData.fuelType
+        )
     }
 }
