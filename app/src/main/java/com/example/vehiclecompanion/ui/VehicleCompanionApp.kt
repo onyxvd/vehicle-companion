@@ -113,8 +113,8 @@ private fun getScreenTitleForDestination(
         Garage.route -> context.getString(R.string.garage_screen_title)
         Places.route -> context.getString(R.string.places_screen_title)
         else -> {
-            if (backStackEntry?.arguments?.getString(PlaceDetails.ARG_PLACE_NAME) != null) {
-                backStackEntry.arguments?.getString(PlaceDetails.ARG_PLACE_NAME)!!
+            if (backStackEntry?.arguments?.getString(PlaceDetails.ARG_SCREEN_TITLE) != null) {
+                backStackEntry.arguments?.getString(PlaceDetails.ARG_SCREEN_TITLE)!!
             } else {
                 context.getString(R.string.app_name)
             }

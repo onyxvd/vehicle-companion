@@ -13,6 +13,9 @@ import com.example.vehiclecompanion.ui.place.PlaceDetailsViewModel
 import com.example.vehiclecompanion.ui.place.PlacesScreen
 import com.example.vehiclecompanion.ui.place.PlacesViewModel
 import com.example.vehiclecompanion.ui.vehicle.GarageScreen
+import com.example.vehiclecompanion.ui.vehicle.GarageViewModel
+import com.example.vehiclecompanion.ui.vehicle.VehicleDetailsScreen
+import com.example.vehiclecompanion.ui.vehicle.VehicleDetailsViewModel
 
 @Composable
 fun AppNavHost(
@@ -25,7 +28,18 @@ fun AppNavHost(
         modifier = modifier
     ) {
         composable(route = Garage.route) {
-            GarageScreen()
+            val viewModel: GarageViewModel = hiltViewModel()
+            GarageScreen(
+                viewModel,
+                onAddVehicleClicked = {
+                    navController.navigate(
+                        VehicleDetails.createNavigationRoute(
+                            null,
+                            "Add Vehicle"
+                        )
+                    )
+                }
+            )
         }
         composable(route = Places.route) {
             val viewModel: PlacesViewModel = hiltViewModel()
@@ -41,13 +55,29 @@ fun AppNavHost(
             route = PlaceDetails.route,
             arguments = listOf(navArgument(PlaceDetails.ARG_PLACE_ID) {
                 type = NavType.IntType
-            }, navArgument(PlaceDetails.ARG_PLACE_NAME) {
+            }, navArgument(PlaceDetails.ARG_SCREEN_TITLE) {
                 type = NavType.StringType
             })
         ) {
             val viewModel: PlaceDetailsViewModel = hiltViewModel()
             PlaceDetailsScreen(
                 viewModel = viewModel
+            )
+        }
+        composable(
+            route = VehicleDetails.route,
+            arguments = listOf(navArgument(VehicleDetails.ARG_VEHICLE_ID) {
+                type = NavType.StringType
+            }, navArgument(VehicleDetails.ARG_SCREEN_TITLE) {
+                type = NavType.StringType
+            })
+        ) {
+            val viewModel: VehicleDetailsViewModel = hiltViewModel()
+            VehicleDetailsScreen(
+                viewModel = viewModel,
+                onSaveCompleted = {
+                    navController.navigateUp()
+                }
             )
         }
     }
