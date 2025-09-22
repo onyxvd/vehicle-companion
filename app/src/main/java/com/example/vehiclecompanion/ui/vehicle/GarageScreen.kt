@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.vehiclecompanion.R
 import com.example.vehiclecompanion.data.db.model.Vehicle
@@ -59,7 +60,7 @@ fun LoadingScreen() {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = "Loading vehicles...")
+        Text(text = stringResource(R.string.loading_vehicles))
     }
 }
 
@@ -75,9 +76,9 @@ fun GarageListScreen(
             contentAlignment = Alignment.Center
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "Your garage is empty.")
+                Text(text = stringResource(R.string.no_vehicles))
                 Button(onClick = onAddVehicleClicked) {
-                    Text(text = "Add Vehicle")
+                    Text(text = stringResource(R.string.add_vehicle))
                 }
             }
         }
@@ -116,7 +117,7 @@ fun VehicleCard(
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_car),
-                    contentDescription = "Vehicle Icon",
+                    contentDescription = stringResource(R.string.vehicle_image),
                     colorFilter = ColorFilter.tint(Color.Gray),
                     contentScale = ContentScale.FillHeight,
                     modifier = Modifier.fillMaxSize()
