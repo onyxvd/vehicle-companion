@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vehiclecompanion.R
 import com.example.vehiclecompanion.data.network.Place
-import com.example.vehiclecompanion.data.network.PlaceApiService
+import com.example.vehiclecompanion.data.repository.PlaceRepository
 import com.example.vehiclecompanion.navigation.PlaceDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -24,7 +24,7 @@ sealed interface PlaceDetailsUiState {
 
 @HiltViewModel
 class PlaceDetailsViewModel @Inject constructor(
-    private val placesApiService: PlaceApiService,
+    private val placeRepository: PlaceRepository,
     savedStateHandle: SavedStateHandle,
     @ApplicationContext val context: Context
 ) : ViewModel() {
@@ -49,7 +49,7 @@ class PlaceDetailsViewModel @Inject constructor(
         uiState = PlaceDetailsUiState.Loading
         viewModelScope.launch {
             uiState = try {
-                val place = placesApiService.getPlaceDetails(placeId!!)
+                val place = placeRepository.getPlaceDetails(placeId!!)
                 PlaceDetailsUiState.Success(place)
             } catch (e: Exception) {
                 PlaceDetailsUiState.Error(context.getString(R.string.place_id_not_provided))
