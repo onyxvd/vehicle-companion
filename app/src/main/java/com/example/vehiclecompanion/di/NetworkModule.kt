@@ -1,6 +1,7 @@
 package com.example.vehiclecompanion.di
 
 import com.example.vehiclecompanion.data.network.PlaceApiService
+import com.example.vehiclecompanion.data.repository.PlaceRepository
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -11,6 +12,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import javax.inject.Singleton
 
 private const val BASE_URL = "https://api2.roadtrippers.com/"
 
@@ -18,6 +20,7 @@ private const val BASE_URL = "https://api2.roadtrippers.com/"
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
     @Provides
+    @Singleton
     fun providePlaceApiService(): PlaceApiService {
         val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
@@ -35,5 +38,11 @@ class NetworkModule {
             .client(okHttpClient)
             .build()
             .create(PlaceApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providePlaceRepository(placeApiService: PlaceApiService): PlaceRepository {
+        return PlaceRepository(placeApiService)
     }
 }

@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vehiclecompanion.data.network.DiscoverPlace
-import com.example.vehiclecompanion.data.network.PlaceApiService
+import com.example.vehiclecompanion.data.repository.PlaceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,7 +19,7 @@ sealed interface PlacesUiState {
 
 @HiltViewModel
 class PlacesViewModel @Inject constructor(
-    private val placesApiService: PlaceApiService
+    private val placeRepository: PlaceRepository
 ) : ViewModel() {
 
     var uiState: PlacesUiState by mutableStateOf(PlacesUiState.Loading)
@@ -33,7 +33,7 @@ class PlacesViewModel @Inject constructor(
         viewModelScope.launch {
             uiState = PlacesUiState.Loading
             uiState = try {
-                val places = placesApiService.discover()
+                val places = placeRepository.discoverPlaces()
                 PlacesUiState.Success(places.places)
             } catch (e: Exception) {
                 PlacesUiState.Error(
