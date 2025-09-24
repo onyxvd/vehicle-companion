@@ -30,4 +30,5 @@
     <string name="save_vehicle">Save Vehicle</string>
     <string name="update_vehicle">Update Vehicle</string>
     <string name="required_field">Required field</string>
+    <string name="no_places_found">No places found.</string>
 </resources>

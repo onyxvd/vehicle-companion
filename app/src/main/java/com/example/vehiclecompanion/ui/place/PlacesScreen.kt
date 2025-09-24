@@ -67,6 +67,10 @@ fun PlacesListScreen(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
+        if (places.isEmpty()) {
+            Text(text = stringResource(R.string.no_places_found))
+            return@Box
+        }
         LazyColumn {
             items(places.size) { index ->
                 val place = places[index]
