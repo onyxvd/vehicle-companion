@@ -43,19 +43,9 @@ jobs:
       - name: Run Unit Tests
         run: ./gradlew test --stacktrace
 
-      # Upload test results
-      - name: Upload test results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: test-results
-          path: app/build/reports/tests/
-
       # Generate test report
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v4
-        if: always()
+        if: success() || failure()
         with:
           report_paths: '**/build/test-results/test/TEST-*.xml'
-          check_name: 'Unit Test Results'
-          fail_on_failure: true
