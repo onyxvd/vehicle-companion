@@ -42,10 +42,3 @@ jobs:
       # Run unit tests
       - name: Run Unit Tests
         run: ./gradlew test --stacktrace
-
-      # Generate test report
-      - name: Publish Test Report
-        uses: mikepenz/action-junit-report@v4
-        if: success() || failure()
-        with:
-          report_paths: '**/build/test-results/test/TEST-*.xml'
