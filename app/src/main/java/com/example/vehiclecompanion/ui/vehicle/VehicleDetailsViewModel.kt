@@ -95,7 +95,6 @@ class VehicleDetailsViewModel @Inject constructor(
             _vehicleUiState.update {
                 (it as VehicleDetailsScreenUiState.Success).copy(
                     vehicleData = newFormData,
-                    formError = null
                 )
             }
         }

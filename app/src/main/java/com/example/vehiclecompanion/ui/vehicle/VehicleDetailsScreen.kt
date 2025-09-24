@@ -118,7 +118,16 @@ fun VehicleFormContent(
             onValueChange = onMakeChange,
             label = { Text(stringResource(R.string.vehicle_details_make_label)) },
             modifier = Modifier.fillMaxWidth(),
-            isError = formError != null && formData.make.isBlank()
+            isError = formError != null && formData.make.isBlank(),
+            supportingText = {
+                if (formError != null && formData.make.isBlank()) {
+                    Text(
+                        text = stringResource(R.string.required_field),
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+            }
         )
 
         OutlinedTextField(
@@ -126,7 +135,16 @@ fun VehicleFormContent(
             onValueChange = onModelChange,
             label = { Text(stringResource(R.string.vehicle_details_model_label)) },
             modifier = Modifier.fillMaxWidth(),
-            isError = formError != null && formData.model.isBlank()
+            isError = formError != null && formData.model.isBlank(),
+            supportingText = {
+                if (formError != null && formData.model.isBlank()) {
+                    Text(
+                        text = stringResource(R.string.required_field),
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+            }
         )
 
         OutlinedTextField(

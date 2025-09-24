@@ -29,4 +29,5 @@
     <string name="vehicle_details_fuel_type_label">Fuel Type</string>
     <string name="save_vehicle">Save Vehicle</string>
     <string name="update_vehicle">Update Vehicle</string>
+    <string name="required_field">Required field</string>
 </resources>
