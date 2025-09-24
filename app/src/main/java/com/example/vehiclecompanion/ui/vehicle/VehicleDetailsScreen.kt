@@ -110,8 +110,7 @@ fun VehicleFormContent(
             value = formData.name ?: "",
             onValueChange = onNameChange,
             label = { Text(stringResource(R.string.vehicle_details_name_label)) },
-            modifier = Modifier.fillMaxWidth(),
-            isError = formError != null
+            modifier = Modifier.fillMaxWidth()
         )
 
         OutlinedTextField(
@@ -119,7 +118,16 @@ fun VehicleFormContent(
             onValueChange = onMakeChange,
             label = { Text(stringResource(R.string.vehicle_details_make_label)) },
             modifier = Modifier.fillMaxWidth(),
-            isError = formError != null && formData.make.isBlank()
+            isError = formError != null && formData.make.isBlank(),
+            supportingText = {
+                if (formError != null && formData.make.isBlank()) {
+                    Text(
+                        text = stringResource(R.string.required_field),
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+            }
         )
 
         OutlinedTextField(
@@ -127,31 +135,37 @@ fun VehicleFormContent(
             onValueChange = onModelChange,
             label = { Text(stringResource(R.string.vehicle_details_model_label)) },
             modifier = Modifier.fillMaxWidth(),
-            isError = formError != null && formData.model.isBlank()
+            isError = formError != null && formData.model.isBlank(),
+            supportingText = {
+                if (formError != null && formData.model.isBlank()) {
+                    Text(
+                        text = stringResource(R.string.required_field),
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+            }
         )
 
         OutlinedTextField(
             value = formData.year?.toString() ?: "",
             onValueChange = { yearString -> onYearChange(yearString.toIntOrNull()) },
             label = { Text(stringResource(R.string.vehicle_details_year_label)) },
-            modifier = Modifier.fillMaxWidth(),
-            isError = formError != null
+            modifier = Modifier.fillMaxWidth()
         )
 
         OutlinedTextField(
             value = formData.vin ?: "",
             onValueChange = onVinChange,
             label = { Text(stringResource(R.string.vehicle_details_vin_label)) },
-            modifier = Modifier.fillMaxWidth(),
-            isError = formError != null
+            modifier = Modifier.fillMaxWidth()
         )
 
         OutlinedTextField(
             value = formData.fuelType ?: "",
             onValueChange = onFuelTypeChange,
             label = { Text(stringResource(R.string.vehicle_details_fuel_type_label)) },
-            modifier = Modifier.fillMaxWidth(),
-            isError = formError != null
+            modifier = Modifier.fillMaxWidth()
         )
 
         formError?.let {
@@ -180,8 +194,7 @@ fun VehicleFormContent(
             }
             Button(
                 onClick = onSaveClicked,
-                modifier = Modifier.weight(1f),
-                enabled = formData.make.isNotBlank() && formData.model.isNotBlank()
+                modifier = Modifier.weight(1f)
             ) {
                 Text(if (isNewVehicle) stringResource(R.string.save_vehicle) else stringResource(R.string.update_vehicle))
             }
